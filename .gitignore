@@ -1,0 +1,7 @@
+# projecte
+*.wav
+
+# Python i Spyder
+.spyproject
+__pycache__/
+build/
