@@ -1,5 +1,7 @@
 # projecte
 *.wav
+data/
+txt-wav/
 
 # Python i Spyder
 .spyproject
