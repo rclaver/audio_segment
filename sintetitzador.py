@@ -7,24 +7,22 @@ Date: 01 Dec 2016
 '''
 import os, re, sys
 import simpleaudio as sa
-#import IPython
+import IPython.display
 import numpy as np
 import argparse
 import nltk
 from nltk.corpus import cmudict
 
 parser = argparse.ArgumentParser(description='A basic text-to-speech app. Synthesises an input phrase using monophone unit selection.')
-parser.add_argument('--monophones', default="monophones", help="Folder containing monophone wavs")
-parser.add_argument('--play', '-p', action="store_true", default=False, help="Play the output audio")
-parser.add_argument('--outfile', '-o', action="store", dest="outfile", type=str, help="Save the output audio to a file", default=None)
+parser.add_argument('-m', '--monophones', default="data", help="Folder containing monophone wavs")
+parser.add_argument('-p', '--play', action="store_true", default=False, help="Play the output audio")
+parser.add_argument('-o', '--outfile', action="store", dest="outfile", type=str, help="Save the output audio to a file", default=None)
+parser.add_argument('-s', '--samplefile', default="data/sample.wav", help="Sample file")
 parser.add_argument('phrase', nargs=1, help="The phrase to be synthesised")
-
 # Arguments for extensions
-parser.add_argument('--spell', '-s', action="store_true", default=False, help="Spell the phrase instead of pronouncing it")
-parser.add_argument('--volume', '-v', default=None, type=float, help="A float between 0.0 and 1.0 representing the desired volume")
+parser.add_argument('-v', '--volume', default=None, type=float, help="A float between 0.0 and 1.0 representing the desired volume")
 
 args = parser.parse_args()
-
 print(args.monophones)
 
 
@@ -58,10 +56,10 @@ class Synth(object):
                if re.search('\.wav$', file):
                   print(file)
                   wave_obj = sa.WaveObject.from_wave_file(f"{wav_folder}/{file}")
-                  # out = sa.Audio()
+                  # out = IPython.display.Audio()
                   # out.load(os.path.join(wav_folder, file))
                   key = file.replace('.wav', '', 1)
-                  self.phones[key] = wave_obj.data
+                  self.phones[key] = wave_obj.audio_data
          return self.phones
 
       except KeyError:
@@ -130,20 +128,21 @@ def get_phone_seq(phrase):
 
 
 if __name__ == "__main__":
+
    S = Synth(wav_folder=args.monophones)
 
    # Create object for 'Audio' class in SimpleAudio.py module
    # Modify 'out.data' to produce the correct synthesis
    import wave
 
-   wave_read = wave.open(path_to_file, 'rb')
+   wave_read = wave.open(args.samplefile, 'rb')
    audio_data = wave_read.readframes(wave_read.getnframes())
    num_channels = wave_read.getnchannels()
    bytes_per_sample = wave_read.getsampwidth()
    sample_rate = wave_read.getframerate()
    wave_obj = sa.WaveObject(audio_data, num_channels, bytes_per_sample, sample_rate)
 
-   out = sa.Audio(rate=16000)
+   out = IPython.display.Audio(audio_data, rate=16000, autoplay=True)
    print(out.data, type(out.data))
 
    phone_seq = get_phone_seq(args.phrase[0])
