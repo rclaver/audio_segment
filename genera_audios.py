@@ -14,10 +14,13 @@ CHUNK = 1024
 FORMAT = pyaudio.paInt16
 CHANNELS = 1       # channels, must be one for forced alignment toolkit to work
 RATE = 16000       # freqüència de mostreig (sample rate)
-RECORD_SECONDS = 5 # nombre de segons de temps per poder dir la frase
+RECORD_SECONDS = 3 # nombre de segons de temps per poder dir la frase
 
 arxiu_de_frases = 'data/frases.txt'
 dir_result = "txt-wav"   #directori dels arxius generats
+
+def underlining_name(name):
+   return name.replace(" ", "_").replace("''", "_")
 
 def record(text, file_name):
    os.system('clear')
@@ -42,7 +45,7 @@ def record(text, file_name):
       wf.setframerate(RATE)
       wf.writeframes(b''.join(frames))
 
-def main(nom, sentence_txt):
+def main(sentence_txt):
    sentence_set = codecs.open(sentence_txt, 'r', ).read().split('\n')
    random.shuffle(sentence_set)
    os.system('clear')
@@ -56,12 +59,13 @@ def main(nom, sentence_txt):
 
    for n in range(0, len(sentence_set)):
       if sentence_set[n]:
-         record(f"{n}:\t{c.CB_YLW}{sentence_set[n]}", f"{dir_result}/{n}_{nom}.wav")
-         with open(f"{dir_result}/{n}_{nom}.txt", "w") as outxt:
+         nom = underlining_name(sentence_set[n])
+         record(f"{n}:\t{c.CB_YLW}{sentence_set[n]}", f"{dir_result}/{nom}.wav")
+         with open(f"{dir_result}/{nom}.txt", "w") as outxt:
             outxt.write(sentence_set[n])
 
    print(f'\n{c.CB_GRN}** Fi de la gravació **{c.C_NONE}\n')
 
 # inici
 if __name__ == "__main__":
-   main('frase', arxiu_de_frases)
+   main(arxiu_de_frases)
