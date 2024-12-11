@@ -4,9 +4,9 @@
 ## Haureu d'executar aquest script una vegada per a cada paraula del vostre conjunt de dades.
 ## Es configura així de manera que tots els tokens d'una paraula determinada es marquen en successió,
 ## augmentant la uniformitat entre tokens. Per especificar la paraula en què treballareu, només heu d'executar
-## l'script'. Apareixerà un formulari que us permetrà especificar el vostre directori i la paraula a treballar.
+## l'script. Apareixerà un formulari que us permetrà especificar el vostre directori i la paraula a treballar.
 ## Si no voleu fer-ho d'aquesta manera, només assegureu-vos de deixar el camp "Word" EN BLANC
-## quan executeu l'script -- suprimiu qualsevol valor predeterminat que s'hi mostri.
+## quan executeu l'script suprimiu qualsevol valor predeterminat que s'hi mostri.
 ## Llavors revisaràs tots els fitxers.
 
 # Les quatre línies següents són un formulari que demana la ubicació del directori que voleu utilitzar.
@@ -32,13 +32,14 @@ Create Strings as file list... file-list 'directory$''word$'*.wav
 # variable "number_of_files".  That variable will then be used in setting up the for loop.
 
 number_of_files = Get number of strings
-for x from 1 to number_of_files
+
+for i from 1 to number_of_files
 
 #    Now we will set up a string variable called "current_file$" and use it to store the first
 #    filename from the list.
 
      select Strings file-list
-     current_file$ = Get string... x
+     current_file$ = Get string... i
 
 #    Now that we have the filename, we read in that file:
 
@@ -92,9 +93,6 @@ for x from 1 to number_of_files
      select all
      minus Strings file-list
      Remove
-
-# This specifies the end of the loop:
-
 endfor
 
 
