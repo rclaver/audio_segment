@@ -14,13 +14,13 @@ item []:
         intervals: size = 3 
         intervals [1]:
             xmin = 0 
-            xmax = 1.1763505106426528 
-            text = "zona de silenci" 
+            xmax = 0.9977142857142857 
+            text = "zona_de_silenci" 
         intervals [2]:
-            xmin = 1.1763505106426528 
-            xmax = 1.8742771740436037 
-            text = "zona audio" 
+            xmin = 0.9977142857142857 
+            xmax = 2.037714285714286 
+            text = "zona_de_so" 
         intervals [3]:
-            xmin = 1.8742771740436037 
+            xmin = 2.037714285714286 
             xmax = 2.944 
-            text = "zona de silenci" 
+            text = "zona_de_silenci" 

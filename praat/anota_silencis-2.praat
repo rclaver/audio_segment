@@ -1,10 +1,12 @@
 ##
-# Edita un arxiu d'audio
+# Divideix un arxiu d'audio en segments de so i silenci
 ##
 
 dir$ = "/home/rafael/projectes/TTS/alineació/praat/test/"
 file$ = "A_casa_he_arribat"
-logfile$ = dir$ + file$ + ".log"
+sufix$ = "-2"
+path$ = dir$ + file$
+logfile$ = path$ + sufix$ + ".log"
 
 start = 0.0
 finish = 0.0
@@ -23,18 +25,19 @@ etq_so$ = "zona audio"
 
 deleteFile (logfile$)
 
-sound = Read from file: dir$ + file$ + ".wav"
+sound = Read from file: path$ + ".wav"
 selectObject: sound
 
 # Proceso de reducción de ruido y generación del audio modificado
-# No es necesario para la detección de las zonas de silencio
-#Reduce noise: start, finish, 0.025, 80.0, 800.0, 10.0, -60.0, "spectral-subtraction"
-#Save as WAV file: dir$ + file$ + "_denoised.wav"
-#selectObject: sound
-#Remove
-
-sound = Read from file: dir$ + file$ + "_denoised.wav"
-selectObject: sound
+# (no es necesario para la detección de las zonas de silencio)
+#
+   #Reduce noise: start, finish, 0.025, 80.0, 800.0, 10.0, -60.0, "spectral-subtraction"
+   #Save as WAV file: path$ + "_denoised.wav"
+   #selectObject: sound
+   #Remove
+#
+   #sound = Read from file: path$ + "_denoised.wav"
+   #selectObject: sound
 
 finish = Get total duration
 
@@ -52,7 +55,7 @@ textgrid = To TextGrid (silences): min_pitch, time_step, llindar_sil, dur_min_si
 selectObject: textgrid
 
 # Output textgrid
-Save as text file: dir$ + file$ + ".TextGrid"
+Save as text file: path$ + sufix$ + ".TextGrid"
 
 # log
 appendFileLine (logfile$, "Paràmetres")
