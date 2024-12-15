@@ -6,7 +6,7 @@ beginPause: "Detecció i eliminació de silencis"
    comment: "Directori d'arxius wav"
       sentence: "dir_wav", "/home/rafael/projectes/TTS/alineació/test/"
    comment: "Umbrals de duració"
-      positive: "duration_silence", "0.3"
+      positive: "duration_silence", "0.1"
       positive: "duration_speech", "0.1"
    clicked = endPause: "OK", 1
 

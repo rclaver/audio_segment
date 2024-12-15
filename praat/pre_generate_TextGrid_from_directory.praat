@@ -21,27 +21,17 @@ form Enter directory and search string
 	sentence Word
 endform
 
-# First we will make a list of all the sound files in your directory that begin with
-# the word you specified in the form.  Note:  The next line is where you would change
-# sound file extensions, such as replacing ".wav" with ".aiff".
-
+# Fem una llista de tots els fitxers de so del directori que comencen amb la paraula
+# especificada al formulari
 Create Strings as file list... file-list 'directory$''word$'*.wav
 
-# Now we will set up a "for" loop -- the loop will iterate once for every file in the list we just made.
-# First we will query our list to see how many filenames are in it, and store that number using the
-# variable "number_of_files".  That variable will then be used in setting up the for loop.
-
+# Ara configurem un bucle "for" per a cada fitxer de la llista strings.
 number_of_files = Get number of strings
 
 for i from 1 to number_of_files
 
-#    Now we will set up a string variable called "current_file$" and use it to store the first
-#    filename from the list.
-
      select Strings file-list
      current_file$ = Get string... i
-
-#    Now that we have the filename, we read in that file:
 
      Read from file... 'directory$''current_file$'
 
@@ -72,7 +62,7 @@ for i from 1 to number_of_files
 #    marks using the mouse and keyboard.  Note that the user does not need to save the textgrid -- this is
 #    built into the script later.  Just click on "continue" when you have made the marks that you want.
 
-     pause  Mark your segments!
+     pause Mark your segments!
 
 #    Now we will save the TextGrid object, so that the user doesn't have to do it for each file.
 #    The first step is to de-select the sound object, leaving us with only the TextGrid selected:
