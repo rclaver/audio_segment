@@ -10,6 +10,7 @@ import random
 import os
 import sys; sys.path.append("/home/rafael/projectes/python/utilitats"); import colors as c
 
+# Valors per defecte
 CHUNK = 1024
 FORMAT = pyaudio.paInt16
 CHANNELS = 1       # channels, must be one for forced alignment toolkit to work
@@ -18,6 +19,15 @@ RECORD_SECONDS = 3 # nombre de segons de temps per poder dir la frase
 
 arxiu_de_frases = 'data/frases.txt'
 dir_result = "txt-wav"   #directori dels arxius generats
+
+# Paràmetres de la línia de comandes
+for a in range(1, len(sys.argv)):
+   if sys.argv[a].isnumeric():
+      RECORD_SECONDS = float(sys.argv[a])
+   elif sys.argv[a].isalpha():
+      arxiu_de_frases = 'data/'+sys.argv[a]
+   else: #conté ruta
+      arxiu_de_frases = sys.argv[a]
 
 def underlining_name(name):
    return name.replace(" ", "_").replace("''", "_")
@@ -45,9 +55,7 @@ def record(text, file_name):
       wf.setframerate(RATE)
       wf.writeframes(b''.join(frames))
 
-def main(sentence_txt):
-   sentence_set = codecs.open(sentence_txt, 'r', ).read().split('\n')
-   random.shuffle(sentence_set)
+def prepara():
    os.system('clear')
    print(f"{c.CB_WHT}-------------------------------------------------")
    print(f"{c.CB_WHT}Gravació d'audios breus a partir de frases curtes")
@@ -56,6 +64,11 @@ def main(sentence_txt):
    print(f"{c.CB_WHT}Si estàs preparat, prem la tecla 'Retorn'{c.C_NONE}", end="")
    input()
    os.system('clear')
+
+def processa_arxiu(sentence_txt):
+   prepara()
+   sentence_set = codecs.open(sentence_txt, 'r', ).read().split('\n')
+   #random.shuffle(sentence_set) #ordena les frases aleatòriament
 
    for n in range(0, len(sentence_set)):
       if sentence_set[n]:
@@ -68,4 +81,4 @@ def main(sentence_txt):
 
 # inici
 if __name__ == "__main__":
-   main(arxiu_de_frases)
+   processa_arxiu(arxiu_de_frases)
